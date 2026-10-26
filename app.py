@@ -27,7 +27,7 @@ def _port_available(host: str, port: int) -> bool:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="在 5 个子文件夹的图片中人工选出胜者与败者。",
+        description="图片筛选工具。",
     )
     parser.add_argument(
         "--host", default="127.0.0.1", help="监听地址（默认 127.0.0.1）"

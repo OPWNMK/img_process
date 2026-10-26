@@ -25,7 +25,7 @@
 - 插件包：`dsh-plugin/`
 - 安装说明：[dsh-plugin/README.md](dsh-plugin/README.md)
 - 安装路径：`/home/video408/Project/img_process/dsh-plugin`
-- 打包文件：[dist/dsh-image-scorer-0.1.0.tgz](dist/dsh-image-scorer-0.1.0.tgz)
+- 打包文件：[dist/dsh-image-scorer-0.1.1.tgz](dist/dsh-image-scorer-0.1.1.tgz)
 
 ![DSH 侧栏中的评分页](dsh-plugin/screenshots/dsh-selected.png)
 

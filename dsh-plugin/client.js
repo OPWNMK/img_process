@@ -418,7 +418,7 @@ window.__ModuleLoader__.load({
     function Scoring({ store }) {
       const {
         dataset, records, setRecords, index, setIndex, selection, setSelection,
-        setView, setRootPath, showToast, setBusy, busy, busyText, stateRef,
+        setView, setRootPath, showToast, setBusy, setBusyText, busy, busyText, stateRef,
       } = store;
       const pageRef = useRef(null);
       const [discardOpen, setDiscardOpen] = useState(false);

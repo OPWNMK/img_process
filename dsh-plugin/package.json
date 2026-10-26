@@ -1,6 +1,6 @@
 {
   "name": "@local/dsh-image-scorer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "description": "五图鉴：在 DSH 侧栏进行五路图片人工偏好评分",
