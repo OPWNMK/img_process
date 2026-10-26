@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "五图鉴",
+    "title": "图分宝",
     "description": "在 DSH 侧栏对 5 个子文件夹中的图片进行胜/败人工标注，并写入 scores.json。"
   }
 }

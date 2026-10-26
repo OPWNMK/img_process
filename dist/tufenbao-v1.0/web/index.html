@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0b0c0f">
+  <title>图分宝 · 人工图片评分</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="i-logo" viewBox="0 0 40 40">
+      <rect x="3" y="8" width="5" height="24" rx="2.5" fill="currentColor" opacity=".38"/>
+      <rect x="11" y="4" width="5" height="32" rx="2.5" fill="currentColor" opacity=".58"/>
+      <rect x="19" y="9" width="5" height="24" rx="2.5" fill="currentColor"/>
+      <rect x="27" y="6" width="5" height="30" rx="2.5" fill="currentColor" opacity=".72"/>
+      <rect x="35" y="12" width="3" height="19" rx="1.5" fill="currentColor" opacity=".38"/>
+    </symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24">
+      <path d="M3.5 6.75A2.25 2.25 0 0 1 5.75 4.5h3.1c.6 0 1.17.24 1.6.66l1.05 1.05c.42.42.99.66 1.59.66h5.16a2.25 2.25 0 0 1 2.25 2.25v7.13a2.25 2.25 0 0 1-2.25 2.25H5.75a2.25 2.25 0 0 1-2.25-2.25V6.75Z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    </symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24">
+      <path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24">
+      <path d="M12 19V5m0 0-5 5m5-5 5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24">
+      <path d="m5 12.5 4.2 4.2L19 6.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-crown" viewBox="0 0 24 24">
+      <path d="m4 8 4.2 3.2L12 5l3.8 6.2L20 8l-1.4 9H5.4L4 8Z" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round"/>
+      <path d="M5.5 20h13" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-down" viewBox="0 0 24 24">
+      <path d="M12 4.5v14m0 0 5-5m-5 5-5-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24">
+      <path d="M5.5 7.5h13M9.5 7.5V5.7c0-.66.54-1.2 1.2-1.2h2.6c.66 0 1.2.54 1.2 1.2v1.8M7.3 7.5l.7 11.1c.04.75.66 1.4 1.43 1.4h5.14c.77 0 1.39-.65 1.43-1.4l.7-11.1M10 11v5.5M14 11v5.5" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24">
+      <path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24">
+      <rect x="9" y="9" width="10.5" height="10.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M15 7.5V6.2c0-1.2-1-2.2-2.2-2.2H6.2A2.2 2.2 0 0 0 4 6.2v6.6c0 1.2 1 2.2 2.2 2.2h1.3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    </symbol>
+    <symbol id="i-download" viewBox="0 0 24 24">
+      <path d="M12 4v10.5m0 0 4-4m-4 4-4-4M4.5 17v2.2c0 .7.58 1.3 1.3 1.3h12.4c.72 0 1.3-.6 1.3-1.3V17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-x" viewBox="0 0 24 24">
+      <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24">
+      <path d="M19 12H5m0 0 5-5m-5 5 5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-image" viewBox="0 0 24 24">
+      <rect x="3.5" y="4.5" width="17" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <circle cx="9" cy="10" r="1.5" fill="currentColor"/>
+      <path d="m5 17 4.2-4.2 3.1 3.1 2.3-2.3L20 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24">
+      <path d="M12 3.5c.7 4.8 3.7 7.8 8.5 8.5-4.8.7-7.8 3.7-8.5 8.5-.7-4.8-3.7-7.8-8.5-8.5 4.8-.7 7.8-3.7 8.5-8.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-json" viewBox="0 0 24 24">
+      <path d="M9 4H6.8C5.8 4 5 4.8 5 5.8v3.1c0 1.2-.6 2.1-1.8 2.6v1c1.2.5 1.8 1.4 1.8 2.6v3.1c0 1 .8 1.8 1.8 1.8H9M15 4h2.2c1 0 1.8.8 1.8 1.8v3.1c0 1.2.6 2.1 1.8 2.6v1c-1.2.5-1.8 1.4-1.8 2.6v3.1c0 1-.8 1.8-1.8 1.8H15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24">
+      <path d="M12 3.5 19 6v5.4c0 4.1-2.8 7.7-7 9.1-4.2-1.4-7-5-7-9.1V6l7-2.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="m8.6 12 2.2 2.2 4.7-4.7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </svg>
+
+  <div class="page-glow" aria-hidden="true"></div>
+
+  <header class="masthead">
+    <a class="brand" href="/" aria-label="图分宝首页">
+      <span class="brand-mark"><svg><use href="#i-logo"></use></svg></span>
+      <span class="brand-text"><strong>图分宝</strong><small>IMAGE / SCORER</small></span>
+    </a>
+    <div class="masthead-right">
+      <span class="privacy-note"><span class="status-dot"></span>本地运行 · 图片不离开电脑</span>
+      <button class="icon-btn help-btn" id="helpBtn" type="button" aria-label="查看操作说明" title="操作说明">?</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <!-- ---------------------------------------------------------------- -->
+    <!-- Welcome                                                           -->
+    <!-- ---------------------------------------------------------------- -->
+    <section class="view welcome-view" id="welcomeView">
+      <div class="welcome-copy">
+        <p class="eyebrow"><span></span>HUMAN PREFERENCE TOOL</p>
+        <!-- <h1>五张图，<br><em>一票定高下。</em></h1> -->
+        <p class="lede">把模型效果的主观判断，变成干净、可复用的偏好数据。每次只专注一组，选出胜者与败者。</p>
+
+        <div class="workflow">
+          <div class="workflow-step">
+            <span class="step-num">01</span>
+            <p><strong>选定根目录</strong><small>自动读取等量子文件夹</small></p>
+          </div>
+          <div class="workflow-line"></div>
+          <div class="workflow-step">
+            <span class="step-num">02</span>
+            <p><strong>逐组评判</strong><small>胜者、败者各选一张</small></p>
+          </div>
+          <div class="workflow-line"></div>
+          <div class="workflow-step">
+            <span class="step-num">03</span>
+            <p><strong>写入 JSON</strong><small>随时中断，进度不丢失</small></p>
+          </div>
+        </div>
+
+        <div class="folder-blueprint" aria-hidden="true">
+          <div class="blueprint-root"><svg><use href="#i-folder"></use></svg><span>根目录</span></div>
+          <div class="blueprint-branches">
+            <span>子文件夹 01</span><span>子文件夹 02</span><span>子文件夹 03</span><span>子文件夹 04</span><span>子文件夹 05</span>
+          </div>
+          <div class="blueprint-count"><b>5 × N</b><span>逐行配对成组</span></div>
+        </div>
+      </div>
+
+      <div class="setup-wrap">
+        <div class="setup-card">
+          <div class="card-topline">
+            <span>开始标注</span>
+            <span class="mini-badge">v1.0</span>
+          </div>
+
+          <div class="stack-preview" aria-hidden="true">
+            <div class="stack-card stack-1"><span>A</span></div>
+            <div class="stack-card stack-2"><span>B</span></div>
+            <div class="stack-card stack-3"><span>C</span></div>
+            <div class="stack-card stack-4"><span>D</span></div>
+            <div class="stack-card stack-5"><span>E</span></div>
+            <div class="stack-glow"></div>
+          </div>
+
+          <form id="loadForm" novalidate>
+            <label class="field-label" for="rootInput">图片根文件夹</label>
+            <div class="path-field">
+              <svg class="field-icon"><use href="#i-folder"></use></svg>
+              <input id="rootInput" name="root" type="text" spellcheck="false" autocomplete="off"
+                     placeholder="例如 /home/user/datasets/fusion_results">
+              <button class="browse-inline" id="browseBtn" type="button">浏览</button>
+            </div>
+            <p class="field-hint">根目录下需有且仅有 5 个子文件夹，且每个子文件夹的图片数量相同。</p>
+            <p class="form-error" id="loadError" role="alert" hidden></p>
+            <button class="btn btn-primary btn-load" id="loadBtn" type="submit">
+              <span>开始评分</span>
+              <svg class="icon"><use href="#i-arrow-up"></use></svg>
+            </button>
+            <button class="demo-link" id="demoBtn" type="button" hidden>
+              <svg class="icon"><use href="#i-spark"></use></svg>
+              没有数据？用内置演示图片体验
+            </button>
+          </form>
+
+          <div class="setup-foot">
+            <span><svg><use href="#i-shield"></use></svg>仅在本地读写</span>
+            <span><svg><use href="#i-json"></use></svg>输出 scores.json</span>
+          </div>
+        </div>
+        <p class="recent-note" id="recentNote" hidden></p>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+    <!-- Scoring                                                           -->
+    <!-- ---------------------------------------------------------------- -->
+    <section class="view scoring-view" id="scoringView" hidden>
+      <header class="workspace-bar">
+        <div class="dataset-ident">
+          <span class="dataset-label">当前数据集</span>
+          <button class="dataset-path" id="rootPathBtn" type="button" title="复制完整路径">
+            <span id="rootName">—</span>
+            <svg class="icon tiny"><use href="#i-copy"></use></svg>
+          </button>
+        </div>
+
+        <div class="workspace-progress">
+          <div class="progress-copy">
+            <span><b id="positionNow">1</b> / <span id="positionTotal">1</span> 组</span>
+            <span class="saved-pill"><span class="saved-dot"></span>已记录 <b id="savedCount">0</b></span>
+          </div>
+          <div class="progress-track" aria-hidden="true"><span id="positionFill"></span></div>
+        </div>
+
+        <div class="workspace-actions">
+          <button class="btn btn-ghost btn-sm" id="summaryBtn" type="button">
+            汇总
+          </button>
+          <button class="btn btn-ghost btn-sm" id="changeRootBtn" type="button">
+            更换文件夹
+          </button>
+        </div>
+      </header>
+
+      <div class="stage">
+        <div class="group-heading">
+          <div class="group-title">
+            <p class="eyebrow"><span></span><span id="groupEyebrow">GROUP 01</span></p>
+            <div class="group-title-row">
+              <h2 id="groupTitle">第 1 组</h2>
+              <span class="record-state" id="recordState">未记录</span>
+            </div>
+          </div>
+
+          <div class="record-key-wrap">
+            <span class="record-key-label">JSON 记录名</span>
+            <span class="record-key" id="recordKey">—</span>
+            <span class="key-warning" id="keyWarning" hidden>文件名不一致 · 取首图名</span>
+          </div>
+
+          <div class="group-tip">
+            <span class="tip-line"></span>
+            <span id="groupCounter">1 / 1</span>
+          </div>
+        </div>
+
+        <div class="card-grid" id="cardGrid" aria-live="polite"></div>
+      </div>
+
+      <footer class="command-bar">
+        <div class="selection-readout">
+          <div class="selection-item selection-win">
+            <span class="selection-icon"><svg><use href="#i-crown"></use></svg></span>
+            <span class="selection-copy"><small>胜者 WIN</small><strong id="winnerReadout">尚未选择</strong></span>
+          </div>
+          <div class="selection-divider"></div>
+          <div class="selection-item selection-lose">
+            <span class="selection-icon"><svg><use href="#i-down"></use></svg></span>
+            <span class="selection-copy"><small>败者 LOSE</small><strong id="loserReadout">尚未选择</strong></span>
+          </div>
+          <span class="save-status" id="saveStatus"></span>
+        </div>
+
+        <div class="command-actions">
+          <button class="btn btn-quiet" id="discardBtn" type="button">
+            <svg class="icon"><use href="#i-trash"></use></svg>
+            丢弃本组
+          </button>
+          <span class="command-sep"></span>
+          <button class="btn btn-ghost" id="prevBtn" type="button" aria-label="上一组">
+            <svg class="icon"><use href="#i-arrow-left"></use></svg>
+            上一组
+          </button>
+          <button class="btn btn-primary" id="saveBtn" type="button" disabled>
+            <span id="saveBtnText">保存并下一组</span>
+            <kbd>Enter</kbd>
+          </button>
+        </div>
+      </footer>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+    <!-- Finish                                                            -->
+    <!-- ---------------------------------------------------------------- -->
+    <section class="view finish-view" id="finishView" hidden>
+      <div class="finish-card">
+        <div class="finish-mark"><svg><use href="#i-check"></use></svg></div>
+        <p class="eyebrow centered"><span></span>SESSION SUMMARY<span></span></p>
+        <h1>评判进度已保存。</h1>
+        <p class="finish-lede">你的每一个选择都已实时写入 JSON，可以随时关闭页面，下次继续。</p>
+
+        <div class="finish-stats">
+          <div class="finish-stat"><strong id="finishSaved">0</strong><span>组已记录</span></div>
+          <div class="finish-stat"><strong id="finishSkipped">0</strong><span>组未记录</span></div>
+          <div class="finish-stat"><strong id="finishTotal">0</strong><span>组总数</span></div>
+        </div>
+
+        <div class="finish-file">
+          <div class="finish-file-head">
+            <span><svg><use href="#i-json"></use></svg>评分文件</span>
+            <span class="file-state"><span class="status-dot"></span>已同步</span>
+          </div>
+          <code id="finishPath">scores.json</code>
+          <div class="finish-file-actions">
+            <button class="btn btn-ghost btn-sm" id="copyPathBtn" type="button">
+              <svg class="icon"><use href="#i-copy"></use></svg>复制路径
+            </button>
+            <button class="btn btn-ghost btn-sm" id="downloadBtn" type="button">
+              <svg class="icon"><use href="#i-download"></use></svg>下载 JSON
+            </button>
+          </div>
+        </div>
+
+        <div class="finish-actions">
+          <button class="btn btn-primary" id="resumeBtn" type="button">继续检查</button>
+          <button class="btn btn-ghost" id="firstUnrecordedBtn" type="button">跳到未记录组</button>
+          <button class="btn btn-quiet" id="newDatasetBtn" type="button">更换文件夹</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- Folder picker                                                       -->
+  <!-- ------------------------------------------------------------------ -->
+  <dialog class="modal folder-modal" id="folderDialog" aria-labelledby="folderDialogTitle">
+    <div class="modal-head">
+      <div>
+        <p class="eyebrow"><span></span>SELECT DATASET</p>
+        <h2 id="folderDialogTitle">选择图片根文件夹</h2>
+      </div>
+      <button class="icon-btn" id="closeFolderBtn" type="button" aria-label="关闭">
+        <svg><use href="#i-x"></use></svg>
+      </button>
+    </div>
+
+    <div class="picker-shortcuts" id="shortcutList"></div>
+
+    <form class="picker-path" id="pickerPathForm">
+      <button class="icon-btn" id="pickerUpBtn" type="button" aria-label="上一级目录" title="上一级目录">
+        <svg><use href="#i-arrow-up"></use></svg>
+      </button>
+      <input id="pickerPathInput" type="text" spellcheck="false" autocomplete="off" aria-label="文件夹路径">
+      <button class="btn btn-ghost btn-sm" type="submit">前往</button>
+    </form>
+
+    <div class="picker-current">
+      <svg><use href="#i-folder"></use></svg>
+      <span id="pickerCurrentPath">—</span>
+    </div>
+
+    <div class="dir-list" id="dirList" tabindex="-1"></div>
+    <p class="picker-error" id="pickerError" role="alert" hidden></p>
+
+    <div class="modal-foot">
+      <p>请选择包含 <b>5 个子文件夹</b> 的根目录</p>
+      <div class="modal-foot-actions">
+        <button class="btn btn-quiet" id="cancelFolderBtn" type="button">取消</button>
+        <button class="btn btn-primary" id="chooseFolderBtn" type="button">使用此文件夹</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- Discard confirmation                                                -->
+  <!-- ------------------------------------------------------------------ -->
+  <dialog class="modal confirm-modal" id="discardDialog" aria-labelledby="discardTitle">
+    <div class="confirm-icon"><svg><use href="#i-trash"></use></svg></div>
+    <h2 id="discardTitle">丢弃这一组？</h2>
+    <p>本组不会写入 <code>scores.json</code>；如果已有记录，也会一并删除。此操作可稍后重新评分。</p>
+    <div class="confirm-actions">
+      <button class="btn btn-ghost" id="cancelDiscardBtn" type="button">再想想</button>
+      <button class="btn btn-danger" id="confirmDiscardBtn" type="button">丢弃并下一组</button>
+    </div>
+  </dialog>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- Lightbox                                                            -->
+  <!-- ------------------------------------------------------------------ -->
+  <dialog class="lightbox" id="lightboxDialog" aria-label="查看大图">
+    <button class="icon-btn lightbox-close" id="closeLightboxBtn" type="button" aria-label="关闭大图">
+      <svg><use href="#i-x"></use></svg>
+    </button>
+    <div class="lightbox-img-wrap"><img id="lightboxImg" alt=""></div>
+    <div class="lightbox-caption">
+      <span id="lightboxFolder">—</span>
+      <span id="lightboxFile">—</span>
+      <span class="lightbox-hint">按 Esc 关闭</span>
+    </div>
+  </dialog>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- Help                                                                -->
+  <!-- ------------------------------------------------------------------ -->
+  <dialog class="modal help-modal" id="helpDialog" aria-labelledby="helpTitle">
+    <div class="modal-head">
+      <div>
+        <p class="eyebrow"><span></span>HOW TO USE</p>
+        <h2 id="helpTitle">三分钟上手</h2>
+      </div>
+      <button class="icon-btn" id="closeHelpBtn" type="button" aria-label="关闭">
+        <svg><use href="#i-x"></use></svg>
+      </button>
+    </div>
+    <div class="help-body">
+      <div class="help-row"><span>01</span><p><strong>选择根文件夹</strong>根目录内有且仅有 5 个包含图片的子文件夹，且图片数量一致。系统按文件名自然排序后，把每个子文件夹的第 N 张图配成一组。</p></div>
+      <div class="help-row"><span>02</span><p><strong>选出胜者与败者</strong>点击图片下方的「胜者」「败者」。同一张图不能兼任两者；再点一次可取消。</p></div>
+      <div class="help-row"><span>03</span><p><strong>保存或丢弃</strong>「保存并下一组」写入 JSON；没有明确偏好时点「丢弃本组」，该组不会出现在 JSON 中。</p></div>
+      <div class="help-row"><span>04</span><p><strong>随时继续</strong>读取根目录下的 <code>scores.json</code> 会自动恢复已有记录，重复评判会覆盖原记录。</p></div>
+      <div class="help-keys">
+        <span><kbd>Enter</kbd> 保存并下一组</span>
+        <span><kbd>←</kbd> 上一组</span>
+        <span><kbd>D</kbd> 丢弃本组</span>
+        <span><kbd>Esc</kbd> 关闭弹窗</span>
+      </div>
+      <div class="json-example">
+        <div class="json-example-head"><span>输出格式</span><code>scores.json</code></div>
+<pre><code>{
+  <span class="j-key">"0001"</span>: {
+    <span class="j-prop">"win"</span>: <span class="j-str">"Ours"</span>,
+    <span class="j-prop">"lose"</span>: <span class="j-str">"Baseline"</span>
+  }
+}</code></pre>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <p>记录名默认取 5 张图的共同文件名（不含扩展名）。</p>
+      <button class="btn btn-primary" id="helpDoneBtn" type="button">知道了</button>
+    </div>
+  </dialog>
+
+  <div class="toast-host" id="toastHost" aria-live="polite" aria-atomic="true"></div>
+
+  <div class="loading-overlay" id="loadingOverlay" hidden>
+    <div class="loader"></div>
+    <p id="loadingText">正在读取图片…</p>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

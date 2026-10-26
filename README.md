@@ -1,8 +1,6 @@
-# 五图鉴 · 人工图片评分
+# 图分宝 · 人工图片评分
 
 一个**零依赖、本地运行**的图片偏好标注工具。选定包含 5 个等量子文件夹的根目录后，它会按顺序把每个子文件夹的第 N 张图配成一组，同屏展示 5 张图；你为每组选出胜者与败者，结果实时写入根目录下的 `scores.json`。
-
-![欢迎页](screenshots/welcome.png)
 
 ## 功能
 
@@ -25,7 +23,7 @@
 - 插件包：`dsh-plugin/`
 - 安装说明：[dsh-plugin/README.md](dsh-plugin/README.md)
 - 安装路径：`/home/video408/Project/img_process/dsh-plugin`
-- 打包文件：[dist/dsh-image-scorer-0.1.1.tgz](dist/dsh-image-scorer-0.1.1.tgz)
+- 打包文件：[dist/dsh-image-scorer-0.1.2.tgz](dist/dsh-image-scorer-0.1.2.tgz)
 
 ![DSH 侧栏中的评分页](dsh-plugin/screenshots/dsh-selected.png)
 

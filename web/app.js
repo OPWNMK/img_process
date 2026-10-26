@@ -479,7 +479,7 @@
       renderWorkspace();
       switchView("scoring");
       showToast(`${data.total} 组图片已载入，开始评判吧`);
-      document.title = `${basename(data.root)} · 五图鉴`;
+      document.title = `${basename(data.root)} · 图分宝`;
       enterGroup(0, { scroll: false });
     } catch (error) {
       if (fromPicker) showInlineError(dom.pickerError, error.message);
@@ -920,7 +920,7 @@
     dom.scoring.savedCount.textContent = String(saved);
     switchView("finish");
     window.scrollTo({ top: 0, behavior: "auto" });
-    document.title = "汇总 · 五图鉴";
+    document.title = "汇总 · 图分宝";
   }
 
   function resumeReview() {
@@ -928,7 +928,7 @@
     switchView("scoring");
     const index = Math.min(state.index, state.dataset.total - 1);
     enterGroup(index, { scroll: false });
-    document.title = `${basename(state.dataset.root)} · 五图鉴`;
+    document.title = `${basename(state.dataset.root)} · 图分宝`;
   }
 
   function goFirstUnrecorded() {
@@ -941,7 +941,7 @@
     } else {
       enterGroup(index);
     }
-    document.title = `${basename(state.dataset.root)} · 五图鉴`;
+    document.title = `${basename(state.dataset.root)} · 图分宝`;
   }
 
   function downloadRecords() {
@@ -963,7 +963,7 @@
     rememberDraft();
     switchView("welcome");
     window.scrollTo({ top: 0, behavior: "auto" });
-    document.title = "五图鉴 · 人工图片评分";
+    document.title = "图分宝 · 人工图片评分";
     if (state.lastRoot) dom.rootInput.value = state.lastRoot;
     window.setTimeout(() => dom.rootInput.focus({ preventScroll: true }), 60);
   }

@@ -117,7 +117,7 @@ window.__ModuleLoader__.load({
       try {
         response = await fetch(url, options);
       } catch {
-        throw new Error('无法连接 DSH 图片评分服务，请确认插件已启用。');
+        throw new Error('无法连接 DSH 图分宝服务，请确认插件已启用。');
       }
       let payload = null;
       try { payload = await response.json(); } catch { payload = null; }

@@ -65,7 +65,7 @@ class ServerTests(unittest.TestCase):
         status, _, body = self.request("GET", "/api/environment")
         self.assertEqual(status, 200)
         payload = json.loads(body)
-        self.assertEqual(payload["service"], "五图鉴")
+        self.assertEqual(payload["service"], "图分宝")
         self.assertIn("shortcuts", payload)
 
     def test_load_image_record_and_discard(self) -> None:

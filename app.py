@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Launch 五图鉴, a local human-in-the-loop image comparison tool."""
+"""Launch 图分宝, a local human-in-the-loop image comparison tool."""
 
 from __future__ import annotations
 

@@ -31,7 +31,7 @@ from .dataset import (
 PACKAGE_ROOT = Path(__file__).resolve().parent.parent
 WEB_ROOT = PACKAGE_ROOT / "web"
 DEMO_ROOT = PACKAGE_ROOT / "demo_data"
-SERVICE_NAME = "五图鉴"
+SERVICE_NAME = "图分宝"
 MAX_BODY_BYTES = 1_000_000
 
 
