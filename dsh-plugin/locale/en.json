@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Five Frame",
+    "description": "Human preference scoring for five image folders inside the DSH sidebar, saved to scores.json."
+  }
+}

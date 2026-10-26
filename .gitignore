@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.cache/
+node_modules/
+demo_data/scores.json
+.preview/
+.dsh-test/
+.cache/
